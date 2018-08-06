@@ -1,15 +1,15 @@
 
 # kubernetes-kafka
-### Based on [this project](https://github.com/Yolean/kubernetes-kafka)
+Based on [this project](https://github.com/Yolean/kubernetes-kafka)
 
-### Deploy YAML
+#### Deploy YAML
 ```
 kubectl apply -f namespace.yml
 kubectl apply -f zookeeper
 kubectl apply -f kafka
 ```
 
-### Interact with Kafka
+#### Interact with Kafka
 ```
 # start kafka shell
 kubectl run temp-kafka --image solsson/kafka --rm -ti --command -- bash
