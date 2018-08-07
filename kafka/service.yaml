@@ -3,7 +3,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: bootstrap
-  namespace: kafka
+  namespace: default
 spec:
   ports:
   - port: 9092
@@ -15,11 +15,11 @@ apiVersion: v1
 kind: Service
 metadata:
   name: broker
-  namespace: kafka
+  namespace: default
 spec:
   ports:
   - port: 9092
-  # [podname].broker.kafka.svc.cluster.local
+  # [podname].broker.default.svc.cluster.local
   clusterIP: None
   selector:
     app: kafka
