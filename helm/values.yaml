@@ -1,0 +1,7 @@
+zookeeper:
+  controller:
+    replicaCount: 2
+
+kafka:
+  controller:
+    replicaCount: 3

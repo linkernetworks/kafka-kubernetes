@@ -2,10 +2,19 @@
 # kubernetes-kafka
 Based on [this project](https://github.com/Yolean/kubernetes-kafka)
 
-#### Deploy YAML
+#### Deploy YAML Directly
 ```
-kubectl apply -f zookeeper
-kubectl apply -f kafka
+kubectl apply -f yaml/zookeeper
+kubectl apply -f yaml/kafka
+```
+
+### Deploy by helm
+```
+# install
+helm install --name kafka --debug helm
+
+# delete
+helm delete --purge kafka
 ```
 
 #### Interact with Kafka

@@ -1,0 +1,25 @@
+kind: ConfigMap
+metadata:
+  name: zookeeper-config
+  namespace: default
+apiVersion: v1
+data:
+  init.sh: |-
+    #!/bin/bash
+    set -x
+
+    [ -z "$ID_OFFSET" ] && ID_OFFSET=1
+    export ZOOKEEPER_SERVER_ID=$((${HOSTNAME##*-} + $ID_OFFSET))
+    echo "${ZOOKEEPER_SERVER_ID:-1}" | tee /var/lib/zookeeper/data/myid
+    cp -Lur /etc/kafka-configmap/* /etc/kafka/
+    sed -i "s/server\.$ZOOKEEPER_SERVER_ID\=[a-z0-9.-]*/server.$ZOOKEEPER_SERVER_ID=0.0.0.0/" /etc/kafka/zookeeper.properties
+
+  zookeeper.properties: |-
+    tickTime=2000
+    dataDir=/var/lib/zookeeper/data
+    clientPort=2181
+    initLimit=5
+    syncLimit=2
+    {{- range $i := until (int .Values.controller.replicaCount)}}
+    server.{{add $i 1}}=zoo-{{$i}}.zoo:2888:3888:participant
+    {{- end}}
